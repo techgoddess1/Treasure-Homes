@@ -1,0 +1,12 @@
+version: '3'
+services:
+  treasure-homes-db:
+    image: postgres:11-alpine
+    volumes:
+      - ./_db:/var/lib/postgresql/data:delegated
+    ports:
+      - 5432:5432
+    environment: 
+      - POSTGRES_PASSWORD=shfufhwy7ubfw8u3iwuw89riuw
+      - POSTGRES_USER=treasureh
+      - POSTGRES_DB=treasure-db
