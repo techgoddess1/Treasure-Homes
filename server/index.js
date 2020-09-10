@@ -1,7 +1,7 @@
 import express from 'express';
 
 import router from './routes';
-import Response from './models/ResponseModel';
+import Response from './helpers/ResponseModel';
 
 const app = express();
 
