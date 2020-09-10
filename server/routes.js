@@ -3,7 +3,10 @@ import swaggerUI from 'swagger-ui-express';
 import swaggerDoc from './docs/swagger';
 import UserMiddleware from './middlewares/UserMiddleware';
 import UserController from './controllers/UserController';
+import PropertyMiddleware from './middlewares/PropertyMiddleware';
+import PropertyController from './controllers/PropertyController';
 import TokenMiddleware from './middlewares/TokenMiddleware';
+import ImageUploader from './middlewares/ImageMiddleware';
 
 const router = express.Router();
 
@@ -26,6 +29,35 @@ router.post(
   UserMiddleware.validateEmail,
   UserMiddleware.validatePassword,
   UserController.signin
+);
+
+// Property routes
+router.post(
+  '/properties',
+  TokenMiddleware.checkToken,
+  PropertyMiddleware.validateCreate,
+  ImageUploader.upload,
+  PropertyController.create
+);
+router.get(
+  '/properties/:property_id',
+  TokenMiddleware.checkToken,
+  PropertyMiddleware.validateParam,
+  PropertyController.getProperty
+);
+router.get(
+  '/properties',
+  TokenMiddleware.checkToken,
+  PropertyController.getAll,
+  PropertyMiddleware.validateStatus,
+  PropertyController.getPropertiesByStatus
+);
+router.delete(
+  '/properties/:property_id',
+  TokenMiddleware.checkToken,
+  PropertyMiddleware.validateParam,
+  PropertyMiddleware.validateAdmin,
+  PropertyController.delete
 );
 
 export default router;

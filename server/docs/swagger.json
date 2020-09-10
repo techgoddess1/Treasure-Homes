@@ -1,1 +1,492 @@
-{}
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Treasure Homes",
+    "description": "Treasure homes",
+    "license": {
+      "name": "ISC"
+    }
+  },
+  "host": "localhost:3000",
+  "basePath": "/api/v1",
+  "schemes": ["https", "http"],
+  "paths": {
+    "/auth/signup": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Creates user",
+        "description": "Adds a new user to the database",
+        "parameters": [
+          {
+            "name": "user",
+            "in": "body",
+            "description": "The user to create",
+            "schema": {
+              "required": ["email", "first_name", "last_name", "password", "street"],
+              "properties": {
+                "email": {
+                  "type": "string",
+                  "example": "johndoe@gmail.com"
+                },
+                "first_name": {
+                  "type": "string",
+                  "example": "John"
+                },
+                "last_name": {
+                  "type": "string",
+                  "example": "Doe"
+                },
+                "gender": {
+                  "type": "string",
+                  "example": "male",
+                  "enum": ["male", "female"]
+                },
+                "street": {
+                  "type": "string",
+                  "example": "20 Ifelodun"
+                },
+                "city": {
+                  "type": "string",
+                  "example": "Agege"
+                },
+                "state": {
+                  "type": "string",
+                  "example": "Lagos"
+                },
+                "country": {
+                  "type": "string",
+                  "example": "Nigeria"
+                },
+                "phone": {
+                  "type": "number",
+                  "example": "08011111111"
+                },
+                "zip": {
+                  "type": "string",
+                  "example": "123-543"
+                },
+                "password": {
+                  "maxLength": 15,
+                  "minLength": 8,
+                  "type": "string",
+                  "example": "rted34w23wg"
+                },
+                "is_admin": {
+                  "type": "boolean",
+                  "default": false
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "User was created successfully",
+            "schema": {
+              "$ref": "#/definitions/UserResponse"
+            }
+          },
+          "400": {
+            "description": "One or more fields is/are missing",
+            "schema": {
+              "$ref": "#/definitions/ClientError"
+            }
+          },
+          "409": {
+            "description": "User with the email exists in the database",
+            "schema": {
+              "$ref": "#/definitions/ClientError"
+            }
+          },
+          "500": {
+            "description": "A server error prevented the user from being created",
+            "schema": {
+              "$ref": "#/definitions/ServerError"
+            }
+          }
+        }
+      }
+    },
+    "/auth/signin": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Login a user",
+        "description": "Validates a user against list of users in the database. Genearates a new token for user if validation is successful",
+        "parameters": [
+          {
+            "name": "user",
+            "in": "body",
+            "description": "The user to signin",
+            "schema": {
+              "required": ["email", "password"],
+              "properties": {
+                "email": {
+                  "type": "string",
+                  "example": "johndoe@gmail.com"
+                },
+                "password": {
+                  "maxLength": 15,
+                  "minLength": 8,
+                  "type": "string",
+                  "example": "g54gfs5680nj"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User was signed in successfully",
+            "schema": {
+              "$ref": "#/definitions/UserResponse"
+            }
+          },
+          "400": {
+            "description": "One or more fields is/are missing",
+            "schema": {
+              "$ref": "#/definitions/ClientError"
+            }
+          },
+          "401": {
+            "description": "The email is not associated with any user",
+            "schema": {
+              "$ref": "#/definitions/ClientError"
+            }
+          },
+          "500": {
+            "description": "A server error prevented the user from being signed in",
+            "schema": {
+              "$ref": "#/definitions/ServerError"
+            }
+          }
+        }
+      }
+    },
+    "/properties": {
+      "post": {
+        "tags": ["Properties"],
+        "summary": "Post a property AD",
+        "description": "Creates a new property AD and saves it in the database",
+        "security": [
+          {
+            "Token": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "property",
+            "required": true,
+            "in": "body",
+            "description": "The body of the property AD to create",
+            "schema": {
+              "required": ["status", "price", "beds", "baths", "parking", "furnished"],
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "available"
+                },
+                "price": {
+                  "type": "integer",
+                  "format": "double",
+                  "example": 1000000.34
+                },
+                "beds": {
+                  "type": "integer",
+                  "example": 2
+                },
+                "baths": {
+                  "type": "integer",
+                  "example": 2
+                },
+                "parking": {
+                  "type": "integer",
+                  "example": 1
+                },
+                "furnished": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "image_url": {
+                  "type": "string",
+                  "example": "C:/upload/home.png"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Property AD was created successfully",
+            "schema": {
+              "$ref": "#/definitions/PropertyResponse"
+            }
+          },
+          "400": {
+            "description": "One or more fields is/are missing",
+            "schema": {
+              "$ref": "#/definitions/ClientError"
+            }
+          },
+          "404": {
+            "description": "User with id: 1 does not exist",
+            "schema": {
+              "$ref": "#/definitions/ClientError"
+            }
+          },
+          "500": {
+            "description": "A server error prevented the car AD from being created",
+            "schema": {
+              "$ref": "#/definitions/ServerError"
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": ["Properties"],
+        "summary": "Gets all unsold posted AD. Gets all properties if called by an Admin",
+        "description": "<li>Returns a list of all properties if called by an admin</li> <li>Returns a list of all available properties if <b>status</b> query parameter is provided</li> <li>Returns a list of available properties within a specific price range if <b>status</b>, <b>min_price</b> and <b>max_price</b> query parameters are provided.</li> <li>Returns a list of available properties with prices that are equal to or greater than <b>min_price</b> if <b>min_price</b> and <b>status</b> query parameters are provided.</li> <li>Returns a list of available properties with prices that are equal to or lesser than <b>max_price</b> if <b>status</b> and <b>max_price</b> query parameters are provided.</li> <li>Returns a list of available properties within a specific price range and has a particular state if <b>status</b>, <b>min_price</b>, <b>max_price</b> and <b>baths</b> query parameters are provided.</li>",
+        "security": [
+          {
+            "Token": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "status",
+            "in": "query",
+            "required": true,
+            "description": "The status of the properties to fetch",
+            "type": "string",
+            "default": "available"
+          },
+          {
+            "name": "min_price",
+            "in": "query",
+            "description": "The minimum price of the propertes to fetch",
+            "type": "integer"
+          },
+          {
+            "name": "max_price",
+            "in": "query",
+            "description": "The maximum price of the properties to fetch",
+            "type": "integer"
+          },
+          {
+            "name": "bed",
+            "in": "query",
+            "description": "The number of beds of the properties to fetch.",
+            "type": "integer"
+          },
+          {
+            "name": "baths",
+            "in": "query",
+            "description": "The number of beds of the properties to fetch.",
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Properties were retrieved successfully",
+            "schema": {
+              "$ref": "#/definitions/PropertyResponse"
+            }
+          },
+          "400": {
+            "description": "A client error prevented the properties from being retrieved",
+            "schema": {
+              "$ref": "#/definitions/ClientError"
+            }
+          },
+          "500": {
+            "description": "A server error prevented the properties from being retrieved",
+            "schema": {
+              "$ref": "#/definitions/ServerError"
+            }
+          }
+        }
+      }
+    }
+  },
+  "securityDefinitions": {
+    "Token": {
+      "description": "Standard Authorization header using the Bearer scheme. Example: \"Bearer {token}\"",
+      "type": "apiKey",
+      "in": "header",
+      "name": "token"
+    }
+  },
+  "definitions": {
+    "ClientError": {
+      "properties": {
+        "status": {
+          "type": "integer",
+          "example": 400
+        },
+        "message": {
+          "type": "string",
+          "example": "There was an error in processing your request"
+        }
+      }
+    },
+    "ServerError": {
+      "properties": {
+        "status": {
+          "type": "integer",
+          "example": 500
+        },
+        "message": {
+          "type": "string",
+          "example": "Server error prevented your request from being processed"
+        }
+      }
+    },
+    "UserResponse": {
+      "properties": {
+        "status": {
+          "type": "integer",
+          "example": 200
+        },
+        "data": {
+          "type": "object",
+          "properties": {
+            "token": {
+              "type": "string",
+              "example": "retfdtblhgt67n89ujnkjyfy5678ghugbdtfvg7vg5bj"
+            },
+            "id": {
+              "type": "integer",
+              "example": 1
+            },
+            "email": {
+              "type": "string",
+              "example": "johndoe@gmail.com"
+            },
+            "first_name": {
+              "type": "string",
+              "example": "John"
+            },
+            "last_name": {
+              "type": "string",
+              "example": "Doe"
+            },
+            "gender": {
+              "type": "string",
+              "example": "male",
+              "enum": ["male", "female"]
+            },
+            "street": {
+              "type": "string",
+              "example": "20 Ifelodun"
+            },
+            "city": {
+              "type": "string",
+              "example": "Agege"
+            },
+            "state": {
+              "type": "string",
+              "example": "Lagos"
+            },
+            "country": {
+              "type": "string",
+              "example": "Nigeria"
+            },
+            "phone": {
+              "type": "number",
+              "example": "08011111111"
+            },
+            "zip": {
+              "type": "string",
+              "example": "123-543"
+            },
+            "is_admin": {
+              "type": "boolean",
+              "default": false
+            },
+            "registered_on": {
+              "type": "string",
+              "example": "10/6/2019 8:30am",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    },
+    "PropertyResponse": {
+      "properties": {
+        "status": {
+          "type": "integer",
+          "example": 200
+        },
+        "data": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "integer",
+              "example": 1
+            },
+            "owner": {
+              "type": "string",
+              "example": "johndoe@gmail.com"
+            },
+            "created_on": {
+              "type": "string",
+              "example": "10/6/2019 8:30am",
+              "format": "date-time"
+            },
+            "state": {
+              "type": "string",
+              "example": "used",
+              "enum": ["new", "used"]
+            },
+            "status": {
+              "type": "string",
+              "example": "available"
+            },
+            "price": {
+              "type": "integer",
+              "format": "double",
+              "example": 1000000.34
+            },
+            "image_url": {
+              "type": "string",
+              "example": "C:/upload/home.png"
+            },
+            "description": {
+              "type": "string",
+              "example": "A blue F50 in great shape....."
+            },
+            "street": {
+              "type": "string",
+              "example": "10, some street"
+            },
+            "city": {
+              "type": "string",
+              "example": "some street"
+            },
+            "beds": {
+              "type": "integer",
+              "example": 2
+            },
+            "baths": {
+              "type": "integer",
+              "example": 4
+            },
+            "sqrft": {
+              "type": "number",
+              "example": 3200
+            },
+            "parking": {
+              "type": "integer",
+              "example": 2
+            },
+            "furnished": {
+              "type": "boolean",
+              "example": true
+            }
+          }
+        }
+      }
+    }
+  }
+}

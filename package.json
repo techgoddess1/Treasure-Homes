@@ -8,7 +8,7 @@
     "clean": "rm -rf dist",
     "coverage": "nyc npm test && nyc report --reporter=text-lcov | coveralls",
     "dev": "nodemon",
-    "start": "node bin/prod",
+    "start": "npm run build && node bin/prod",
     "test": "nyc --reporter=html --reporter=text mocha -r babel-register -r babel-polyfill -r dotenv/config server/test/*.js --exit"
   },
   "author": "",

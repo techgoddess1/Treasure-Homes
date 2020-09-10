@@ -1,3 +1,4 @@
 require("babel-polyfill");
 require("dotenv/config");
+require("../dist/models/Tables.js");
 require("../dist/index.js");
