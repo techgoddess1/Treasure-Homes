@@ -90,7 +90,7 @@ export default class PropertyService {
     }
 
     const query = 'DELETE FROM properties WHERE id=$1';
-    pool.query(query, [propertyId]);
+    await pool.query(query, [propertyId]);
   }
 
   static async findAll() {
