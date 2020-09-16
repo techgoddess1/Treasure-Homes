@@ -3,8 +3,8 @@ export default class UserResponse {
     this.token = token;
     this.id = User.id;
     this.email = User.email;
-    this.first_name = User.firstName;
-    this.last_name = User.lastName;
+    this.first_name = User.firstname;
+    this.last_name = User.lastname;
     this.gender = User.gender;
     this.is_admin = User.isAdmin;
     this.street = User.street;

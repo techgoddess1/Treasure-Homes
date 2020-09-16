@@ -1,16 +1,13 @@
 export default class Property {
   constructor(
     id,
+    title,
     owner,
-    state,
     price,
     imageUrl,
     description,
-    street,
-    city,
-    country,
+    address,
     propertyType,
-    propertyKind,
     status,
     beds,
     baths,
@@ -20,16 +17,13 @@ export default class Property {
   ) {
     this.id = id;
     this.owner = owner;
-    this.state = state;
+    this.title = title;
     this.status = 'available';
     this.price = price;
     this.imageUrl = imageUrl;
     this.description = description;
-    this.street = street;
-    this.city = city;
-    this.country = country;
+    this.address = address;
     this.propertyType = propertyType;
-    this.propertyKind = propertyKind;
     this.status = status;
     this.baths = baths;
     this.beds = beds;
@@ -41,16 +35,13 @@ export default class Property {
 
   setPropertyWithBody(body) {
     this.owner = body.owner;
-    this.state = body.state;
+    this.title = body.title;
     this.status = body.status || 'available';
     this.price = body.price;
     this.imageUrl = body.image_url;
     this.description = body.description;
-    this.street = body.street;
-    this.city = body.city;
-    this.country = body.country;
+    this.address = body.address;
     this.propertyType = body.propertyType;
-    this.propertyKind = body.propertyKind;
     this.status = body.status;
     this.baths = body.baths;
     this.beds = body.beds;
@@ -62,16 +53,13 @@ export default class Property {
   getPropertyAsArray() {
     return [
       this.owner,
-      this.state,
+      this.title,
       this.status,
       this.price,
       this.imageUrl,
       this.description,
-      this.street,
-      this.city,
-      this.country,
+      this.address,
       this.propertyType,
-      this.propertyKind,
       this.baths,
       this.beds,
       this.sqrft,

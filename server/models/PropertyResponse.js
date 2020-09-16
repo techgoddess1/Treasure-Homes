@@ -4,13 +4,13 @@ export default class PropertyResponse {
   constructor(Property, User) {
     this.id = Property.id;
     this.owner = User.email;
+    this.title = Property.title;
     this.price = Property.price;
     this.status = Property.status;
     this.image_url = Property.imageUrl;
-    this.street = Property.street;
-    this.city = Property.city;
-    this.state = Property.state;
+    this.address = Property.address;
     this.description = Property.description;
+    this.propertyType = Property.propertyType;
     this.beds = Property.beds;
     this.baths = Property.baths;
     this.sqrft = Property.sqrft;

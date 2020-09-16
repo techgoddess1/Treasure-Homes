@@ -9,7 +9,7 @@ export default class PropertyService {
       throw new ApiError(400, "Body can't be empty");
     }
     const query =
-      'INSERT INTO properties("userId", state, status, price, "imageUrl", description, street, city, country, "propertyType", "propertyKind", baths, beds, sqrft, parking, furnished, "createdOn") VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17) RETURNING *';
+      'INSERT INTO properties("userId", title, status, price, "imageUrl", description, address, "propertyType", baths, beds, sqrft, parking, furnished, "createdOn") VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14) RETURNING *';
 
     const PropertyData = new Property();
 

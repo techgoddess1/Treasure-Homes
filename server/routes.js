@@ -36,7 +36,6 @@ router.post(
   '/properties',
   TokenMiddleware.checkToken,
   PropertyMiddleware.validateCreate,
-  ImageUploader.upload,
   PropertyController.create
 );
 router.get(
