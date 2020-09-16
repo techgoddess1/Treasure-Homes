@@ -23,8 +23,8 @@ export default class UserService {
     if (email === undefined) {
       throw new ApiError(400, 'Please provide a valid email');
     }
-    const query = 'SELECT * FROM users WHERE email = $1';
-    const user = await pool.query(query, [email]);
+    const quer = 'SELECT * FROM users WHERE email = $1';
+    const user = await pool.query(quer, [email]);
 
     return user;
   }
