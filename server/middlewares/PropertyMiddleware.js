@@ -32,10 +32,6 @@ export default class PropertyMiddleware {
         throw new ApiError(400, 'baths field is required');
       }
 
-      if (parking === undefined) {
-        throw new ApiError(400, 'parking field is required');
-      }
-
       req.body.owner = TokenUser.id;
       next();
     } catch (error) {
