@@ -38,12 +38,7 @@ router.post(
   PropertyMiddleware.validateCreate,
   PropertyController.create
 );
-router.get(
-  '/properties/:property_id',
-  TokenMiddleware.checkToken,
-  PropertyMiddleware.validateParam,
-  PropertyController.getProperty
-);
+router.get('/properties/:property_id', TokenMiddleware.checkToken, PropertyController.getProperty);
 router.get(
   '/properties',
   TokenMiddleware.checkToken,
@@ -54,7 +49,6 @@ router.get(
 router.delete(
   '/properties/:property_id',
   TokenMiddleware.checkToken,
-  PropertyMiddleware.validateParam,
   PropertyMiddleware.validateAdmin,
   PropertyController.delete
 );
